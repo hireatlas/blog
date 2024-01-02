@@ -2,8 +2,8 @@
 slug: paying-it-forward
 issue: paying-it-forward
 title: Paying it forward
-subtitle: We contribute 5% of every engagement to sponsoring open source projects that benefit our customers.
-description: We contribute 5% of every engagement to sponsoring open source projects that benefit our customers.
+subtitle: We contribute 2% of every engagement to sponsoring open source projects that benefit our customers.
+description: We contribute 2% of every engagement to sponsoring open source projects that benefit our customers.
 date: 2024-01-02
 category: company
 authors:
@@ -14,7 +14,7 @@ I'm Mitchell, the founder of Atlas Software. Today, I want to share something cl
 
 It's not just a corporate decision; it's a personal pledge from our team to the world of tech that constantly inspires and drives us.
 
-Starting now, we're dedicating 5% of every client engagement to sponsor open source projects that not only benefit our clients but also resonate with our team's passion and values.
+Starting now, we're dedicating 2% of every client engagement to sponsor open source projects that not only benefit our clients but also resonate with our team's passion and values.
 
 ## The importance of open source
 
