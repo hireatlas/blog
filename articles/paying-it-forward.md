@@ -8,42 +8,59 @@ date: 2024-01-02
 category: company
 authors:
   - mitchell-davis
+image: /assets/articles/paying-it-forward.png
 ---
 
-I'm Mitchell, the founder of Atlas Software. Today, I want to share something close to our hearts – our commitment to the open source community.
+Hey friends, Mitchell here from Atlas Software.
 
-It's not just a corporate decision; it's a personal pledge from our team to the world of tech that constantly inspires and drives us.
+I've got something pretty cool to share – it's about how we're shaking things up a bit and giving back to the open
+source world. You know, the one that's given us so much.
 
-Starting now, we're dedicating 2% of every client engagement to sponsor open source projects that not only benefit our clients but also resonate with our team's passion and values.
+## Why we're all in on open source
 
-## The importance of open source
+Let's be real, open source software is the unsung hero of our tech lives. It's the secret sauce behind so much of
+what we do at Atlas, from the nitty-gritty code in Laravel to those sleek interfaces in Vue.
 
-Open source isn't just code; it's a community we're proud to be part of. It's about working together, sharing ideas, and building something bigger than ourselves.
+It's more than just code; it's this awesome, collaborative space where everyone chips in to build something great. And
+honestly, it's about time we gave back.
 
-It's this spirit of collaboration and innovation that sparked the creation of Atlas Software, and it's what keeps us pushing boundaries every day.
+## Our 2% promise
 
-## The impact of our contribution
+So, here's the deal: **We're setting aside 2% from every project we take on and funneling it into open source
+projects.**
 
-Here's what our initiative really means:
+Not just any projects, though - we're talking about the ones we use day in and day out, and those hidden gems that are
+just brimming with potential.
 
-- **Supporting the Tools We Love**: Our work in Laravel, Vue, and React Native wouldn't be the same without the open source tools we depend on. By funding these projects, we're not just giving back; we're ensuring they continue to grow and evolve with us.
-- **Fostering a Community We Belong To**: This is about more than just writing checks. It's about supporting the meetups, conferences, and workshops that bring us together as developers and thinkers. It's where we learn, laugh, and brainstorm our next big idea.
-- **Fueling Innovation That Excites Us**: We're always on the lookout for the next groundbreaking idea in tech. Supporting open source projects is our way of helping these ideas take flight, leading to new features and technologies that we get to explore and implement in our projects.
+- **Boosting the tools we rely on:** Think of it like buying a round for the folks who've been propping us up. It's our
+  way of saying thanks and making sure these tools keep getting better and better.
 
-## How we choose projects to support
+- **Helping the community thrive:** It's not just about throwing money at a project. It's about supporting the actual
+  gatherings – you know, the meetups, the get-togethers, the places where we all learn a bit more from each other. It's
+  like investing in our own tech family.
 
-Picking the right projects is a personal journey. We look for initiatives that:
+- **Backing cool new ideas:** We're always on the lookout for the next big thing in tech. When we find projects that
+  make us go, “Wow, that's clever!” we want to help them get off the ground. It's about keeping the excitement alive.
 
-- Spark our team's interest and curiosity.
-- Have a direct impact on the work we do for our clients.
-- Share our ethos of innovation, collaboration, and community.
+## Picking the right projects
 
-## Inviting our clients on this adventure
+This isn't just a business move; it's personal. We're looking for projects that:
 
-We believe in transparency and collaboration, not just in our projects but in our contributions too. We're excited to take our clients along on this adventure, keeping them in the loop about the projects we support and the collective impact we're making.
+- Get us genuinely excited.
 
-## Closing thoughts
+- Have a real impact on our work and our clients.
 
-This isn't just a company policy; it's a reflection of who we are at Atlas Software. By giving back to the open source community, we're not just saying thanks for the tools and technologies that power our work. We're also saying we believe in a future where technology is open, collaborative, and a little bit more human.
+- Reflect what we stand for: innovation, teamwork, and, well, just being decent human beings in the tech world.
 
-Thanks for being part of our journey. Here's to building not just great software but a great community, one project at a time.
+## Bringing our clients into the mix
+
+This isn't just our journey; it's ours together with our clients. We're keeping things transparent and sharing the
+stories of the projects we support. It's not just about where their money is going, but about being part of something
+bigger and cooler.
+
+## So, what's next?
+
+This is more than a policy; it's part of who we are at Atlas. We're not just here to make a buck; we're here to make a
+difference, one line of code at a time. And we're stoked to have you with us on this ride.
+
+Thanks for being part of our story. Let's make the tech world a bit brighter together.
