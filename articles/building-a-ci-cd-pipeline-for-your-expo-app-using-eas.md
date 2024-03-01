@@ -8,7 +8,7 @@ date: 2024-03-04
 category: guides
 authors:
   - chris-rossi
-#published: false
+published: false
 ---
 
 [Expo Application Services](https://expo.dev/eas) (EAS) is a cloud-based service for building and publishing
