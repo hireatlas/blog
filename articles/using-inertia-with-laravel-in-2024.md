@@ -40,8 +40,8 @@ it all just works seamlessly.
 For the backend, the main difference is you don't have to write any API code, and in your controllers you
 return `Inertia::render('Blog/Index')` instead of `view('blog.index')`.
 
-For the frontend, the main difference is that you get sessions out of the box, so you never have to deal with tokens,
-and you don't have to manage your routes, which is a huge benefit.
+For the frontend, the main difference is that you write your frontend in Vue, React, or Svelte; you get sessions out of
+the box, so you never have to deal with tokens, and you don't have to manage your routes, which is a huge benefit.
 
 ## How the protocol works
 
@@ -63,6 +63,7 @@ Here's an example:
 {% torchlight-collection type="side-by-side" %}
 
 ```vue {% name="Blog/Index.vue" %}
+
 <template>
   <div class="grid grid-cols-3 gap-6">
     <div v-for="article in $props.articles"> <!-- [tl! focus] -->
@@ -143,6 +144,7 @@ class BlogController
 ```
 
 ```vue {% name="Blog/Index.vue" %}
+
 <template>
   <div class="grid grid-cols-3 gap-6">
     <div v-for="article in $props.articles">
@@ -198,47 +200,6 @@ During the podcast, Aaron brought up the infamous modals presentation, which was
 that [Jonathan previewed](https://youtu.be/euKphNYApn4?t=1550) during Laracon Online 2021. It appeared to show a way to
 manage modals over the top of regular pages directly from your controller, giving you a direct route to create a new
 post (or whatever your domain model is), while still displaying the list of posts in the background underneath it.
-
-```yaml {% theme="github-light" %}
-name: EAS Build
-on:
-  workflow_dispatch:
-    inputs:
-      platform:
-        description: 'Which platform to build for?'
-        required: true
-        type: choice
-        default: all
-        options:
-          - ios
-          - android
-          - all
-  push:
-    branches:
-      - production
-jobs:
-  build:
-    name: Install and build
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18.x
-          cache: npm
-      - name: Setup Expo and EAS
-        uses: expo/expo-github-action@v8
-        with:
-          eas-version: latest
-          token: ${{ secrets.EXPO_TOKEN }}
-      - name: Install dependencies
-        run: npm ci
-      - name: Set the variables
-        run: echo "DEPLOY_PLATFORM=${{ inputs.platform || 'all' }}" >> $GITHUB_ENV
-      - name: Build on EAS and Auto-Submit to App/Play Stores if successful
-        run: eas build --platform "$DEPLOY_PLATFORM" --non-interactive --no-wait --profile production --auto-submit
-```
-
 
 This feature was never released, which led me at least to some feelings of abandonment. Jonathan wrote about why it got
 cut from the scope for v1.0 on [Reddit](https://www.reddit.com/r/laravel/comments/10bsc2o/comment/j4bul56/). Given

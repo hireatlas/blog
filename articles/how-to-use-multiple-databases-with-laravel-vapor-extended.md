@@ -5,7 +5,7 @@ title: How to use multiple databases with Laravel Vapor
 subtitle: Add a second, third, or more databases to your Laravel Vapor project.
 description: Learn how to add multiple databases to your Laravel Vapor project.
 date: 2024-02-12
-category: guide
+category: guides
 authors:
   - mitchell-davis
 published: false

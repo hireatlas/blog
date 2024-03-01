@@ -1,6 +1,6 @@
 ---
 categories:
-  guide: Guide
   trends: Trends
+  guides: Guides
   company: Company
 ---
