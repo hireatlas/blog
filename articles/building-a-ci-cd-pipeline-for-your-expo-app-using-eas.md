@@ -2,13 +2,13 @@
 slug: building-a-ci-cd-pipeline-for-your-expo-app-using-eas
 issue: building-a-ci-cd-pipeline-for-your-expo-app-using-eas
 title: Building a CI/CD pipeline for your Expo app using EAS
-#subtitle: ABC
-description: ABC
+subtitle: Learn how to automate the build and release process for your Expo mobile app.
+description: Learn how to automate the build and release process for your Expo mobile app.
 date: 2024-03-04
 category: guides
 authors:
   - chris-rossi
-published: false
+#published: false
 ---
 
 [Expo Application Services](https://expo.dev/eas) (EAS) is a cloud-based service for building and publishing
