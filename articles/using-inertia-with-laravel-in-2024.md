@@ -1,6 +1,6 @@
 ---
 slug: using-inertia-with-laravel-in-2024
-#issue: using-inertia-with-laravel-in-2024
+issue: using-inertia-with-laravel-in-2024
 title: Using Inertia with Laravel in 2024
 #subtitle: ABC
 description: ABC

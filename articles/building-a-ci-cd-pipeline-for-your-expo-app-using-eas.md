@@ -154,7 +154,7 @@ eas build -p ios --profile development
 
 This will trigger an iOS build using the `development` profile, which you can also monitor via the Expo web UI:
 
-![Creating the GitHub repository via Laravel Vapor](/assets/articles/building-a-ci-cd-pipeline-for-your-expo-app-using-eas/expo-web-ui.png)
+![Creating the GitHub repository via Laravel Vapor](/building-a-ci-cd-pipeline-for-your-expo-app-using-eas/expo-web-ui.png)
 
 If the build happens to fail for any reason, you can review the full XCode or Gradle logs from this screen.
 
@@ -168,9 +168,9 @@ local machine, allowing rapid testing across multiple iOS and Android devices.
 
 Once Orbit is installed, click the "**Open with Orbit**" button on any successful build on the Expo web UI.
 
-![Expo Web - Open with Orbit for MacOS](/assets/articles/building-a-ci-cd-pipeline-for-your-expo-app-using-eas/expo-web-open-with-orbit.png)
+![Expo Web - Open with Orbit for MacOS](/building-a-ci-cd-pipeline-for-your-expo-app-using-eas/expo-web-open-with-orbit.png)
 
-![Expo Orbit for MacOS](/assets/articles/building-a-ci-cd-pipeline-for-your-expo-app-using-eas/expo-orbit.png)
+![Expo Orbit for MacOS](/building-a-ci-cd-pipeline-for-your-expo-app-using-eas/expo-orbit.png)
 
 You can also now repeat the process for an Android build:
 
@@ -195,7 +195,7 @@ to [generate a Personal Access Token](https://docs.expo.dev/accounts/programmati
 Expo. This will allow GitHub Actions to authenticate to the Expo API and trigger builds automatically. Once you have
 this token, you can add it to your GitHub Actions secrets:
 
-![GitHub Secrets - Expo Token](/assets/articles/building-a-ci-cd-pipeline-for-your-expo-app-using-eas/github-secrets-expo-token.png)
+![GitHub Secrets - Expo Token](/building-a-ci-cd-pipeline-for-your-expo-app-using-eas/github-secrets-expo-token.png)
 
 You can then create a new GitHub Action YAML file, e.g. `.github/workflows/eas-build.yml`
 
@@ -251,7 +251,7 @@ If you prefer that the job continues running until the EAS build has completed, 
 
 This particular workflow can also be triggered manually via the GitHub UI if needed (across one or both platforms):
 
-![GitHub Actions - Manually run workflow](/assets/articles/building-a-ci-cd-pipeline-for-your-expo-app-using-eas/github-run-workflow-manual.png)
+![GitHub Actions - Manually run workflow](/building-a-ci-cd-pipeline-for-your-expo-app-using-eas/github-run-workflow-manual.png)
 
 Once this Action has completed you should successfully see a new production build within the Expo web UI.
 
@@ -401,9 +401,9 @@ complete successfully. You can find these in the Submissions section of the Expo
 When the submission is completed, your internal testers will receive an email from Apple/Google notifying them that
 there is a new release of the app to test. They can install this via TestFlight or the Google Play Store.
 
-![New App Version Notification Email - Apple TestFlight](/assets/articles/building-a-ci-cd-pipeline-for-your-expo-app-using-eas/new-app-email-testflight.png)
+![New App Version Notification Email - Apple TestFlight](/building-a-ci-cd-pipeline-for-your-expo-app-using-eas/new-app-email-testflight.png)
 
-![New App Version Notification Email - Google Play Console](/assets/articles/building-a-ci-cd-pipeline-for-your-expo-app-using-eas/new-app-email-google.png)
+![New App Version Notification Email - Google Play Console](/building-a-ci-cd-pipeline-for-your-expo-app-using-eas/new-app-email-google.png)
 
 Once internal testing/QA is completed, you can use the App Store Connect and Google Play Console websites to promote
 each new version to the public.

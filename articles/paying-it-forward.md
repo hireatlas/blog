@@ -9,6 +9,7 @@ category: company
 authors:
   - mitchell-davis
 image: /assets/articles/paying-it-forward.png
+published: true
 ---
 
 Hey friends, Mitchell here from Atlas Software.
