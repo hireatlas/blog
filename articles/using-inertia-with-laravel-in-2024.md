@@ -2,24 +2,23 @@
 slug: using-inertia-with-laravel-in-2024
 issue: using-inertia-with-laravel-in-2024
 title: Using Inertia with Laravel in 2024
-#subtitle: ABC
-description: ABC
-date: 2024-02-29
+description: We are all-in on Inertia in 2024. Here's why you might want to be too.
+date: 2024-03-05
 category: trends
 authors:
   - mitchell-davis
 published: false
 ---
 
-{% callout type="note" title="Mitchell says..." %}
-While this article promotes the use of Inertia, I want you to know that [we love Livewire too](/tech-stack). It's a
-truly fantastic and exciting technology, with a very bright future, and we mean it no disrespect - I promise 🤝.
-{% /callout %}
-
 I was listening to
 a [recent episode of the Mostly Technical podcast](https://mostlytechnical.com/episodes/24-whats-the-good-word), where
 Ian and Aaron make their case for using Livewire over Inertia. We use Inertia on almost every client project we work on,
 so I thought I would help make a case for why you might choose to use Inertia in your Laravel project in 2024.
+
+{% callout type="note" title="Livewire is great too!" %}
+While this article promotes the use of Inertia, I want you to know that [we love Livewire too](/tech-stack). It's a
+truly fantastic and exciting technology, with a very bright future, and we mean it no disrespect - I promise 🤝.
+{% /callout %}
 
 ## A refresher on Inertia
 
@@ -43,9 +42,9 @@ return `Inertia::render('Blog/Index')` instead of `view('blog.index')`.
 For the frontend, the main difference is that you write your frontend in Vue, React, or Svelte; you get sessions out of
 the box, so you never have to deal with tokens, and you don't have to manage your routes, which is a huge benefit.
 
-## How the protocol works
+### How the protocol works
 
-The Inertia docs do a great job of explaining [the protocol](https://inertiajs.com/the-protocol), but the TLDR is that
+The [Inertia docs](https://inertiajs.com/the-protocol) do a great job of explaining the protocol, but the TLDR is that
 by calling `Inertia::render()`, after the initial full-page load is made and the Inertia frontend application has
 booted, the backend will only ever respond with XHR requests (think JSON payloads, just like an API).
 
@@ -53,33 +52,16 @@ This prevents the server from sending the boilerplate HTML on every pageload, sa
 bandwidth, and making the application feel very snappy.
 
 Any parameters you pass into `Inertia::render()` will be JSON encoded and sent to the component as props, making them
-immediately available to your React, Vue, or Svelte components.
+immediately available to your React, Vue, or Svelte components. Your frontend application will interpret the response
+from the backend, and render the appropriate component, using the props you passed to it.
 
-Once you try it, it really feels quite magical to be writing a Vue SPA, with all the benefits Vue gives you, but with
+Once you try it, it really feels quite magical to be writing a Vue (or others) SPA, with all the benefits Vue gives you,
+but with
 access to your controllers that feels like a Blade application.
 
 Here's an example:
 
 {% torchlight-collection type="side-by-side" %}
-
-```vue {% name="Blog/Index.vue" %}
-
-<template>
-  <div class="grid grid-cols-3 gap-6">
-    <div v-for="article in $props.articles"> <!-- [tl! focus] -->
-      <span class="font-semibold text-lg">{{ article.title }}</span> <!-- [tl! focus] -->
-    </div> <!-- [tl! focus] -->
-  </div>
-</template>
-
-<script>
-export default {
-  props: { // [tl! focus]
-    articles: Array, // [tl! focus]
-  }, // [tl! focus]
-};
-</script>
-```
 
 ```php {% name="BlogController.php" %}
 <?php
@@ -103,70 +85,82 @@ class BlogController
                 ->latest() // [tl! focus]
                 ->limit(9) // [tl! focus]
                 ->get(), // [tl! focus]
-        ]);
+        ]); // [tl! focus]
     }
 }
-
-```
-
-{% /torchlight-collection %}
-
-This is some spacer text 😜
-
-{% torchlight-collection %}
-
-```php {% name="BlogController.php" %}
-<?php
-
-namespace App\Http\Controllers;
-
-use App\Models\Article;
-use Illuminate\Http\Request;
-use Inertia\Inertia;
-
-class BlogController
-{
-    public function index(Request $request)
-    {
-        return Inertia::render('Blog/Index', [
-            'articles' => Article::query()
-                ->select([
-                    'id',
-                    'title',
-                ])
-                ->latest()
-                ->limit(9)
-                ->get(),
-        ]);
-    }
-}
-
 ```
 
 ```vue {% name="Blog/Index.vue" %}
 
 <template>
   <div class="grid grid-cols-3 gap-6">
-    <div v-for="article in $props.articles">
-      <span class="font-semibold text-lg">{{ article.title }}</span>
-    </div>
+    <div v-for="article in $props.articles"> <!-- [tl! focus] -->
+      <span class="font-semibold text-lg">{{ article.title }}</span> <!-- [tl! focus] -->
+    </div> <!-- [tl! focus] -->
   </div>
 </template>
 
 <script>
 export default {
-  props: {
-    articles: Array,
-  },
+  props: { // [tl! focus]
+    articles: Array, // [tl! focus]
+  }, // [tl! focus]
 };
 </script>
 ```
 
 {% /torchlight-collection %}
 
-## The perks of using Inertia with Laravel
+## Why you should use Inertia with Laravel
 
-## The negatives of using Inertia with Laravel
+### You don't have to create an API
+
+Did you ever write an Angular frontend back in the day, and had to build out a separate API for your frontend to
+call? **We did.**
+
+Did you have to figure out where to store your authentication token in the browser? **We did.**
+
+Did you have to manage sessions expiring? **We did.**
+
+Inertia removes all of these problems and more, because you aren't writing an API - you're writing a typical Laravel
+application that uses JavaScript instead of Blade.
+
+- You get sessions without needing authentication tokens.
+- You get form requests and redirects without needing API endpoints.
+
+Sure, you _can_ write actual API routes if you need them, and call them from your Inertia app, but it's not a
+requirement. And if you do, Inertia will use your session to make those calls, so you're covered there as well!
+
+### Your app will be really fast
+
+You get a big performance boost by using Inertia, mostly because the backend only has to send through the actual data
+(as JSON props) needed to render your component, and not the HTML for those components.
+
+Because the components themselves are just JavaScript files, they will be cached by the browser and by your CDN, so
+until you release an update to your application, you literally just send the user the HTML for your component once.
+
+This differs from a Blade application, where you are sending the HTML with every single request and are unable to cache
+it in the browser, assuming there is some dynamic content on the page.
+
+### All JavaScript, all of the time
+
+With Inertia, there is almost no
+Blade (technically [two lines](https://inertiajs.com/server-side-setup#root-template) of Blade are required), so you
+spend all of your frontend time inside JavaScript, never having to make a conscious decision to implement a bit of
+functionality in Blade or to bring in some JS sprinkles.
+
+In addition, putting your JS inside your Blade files has just never felt right to me. Now you can have your IDE support
+for Vue, React, or Svelte, as you are **actually** writing a Vue, React, or Svelte component, with the right file
+extension.
+
+### You can still do server-side rendering
+
+Inertia has [great support](https://inertiajs.com/server-side-rendering) for server-side rendering, which will help keep
+your initial load really quick, and makes it easier for search engines to index your page.
+
+It's really easy to setup using the packages that Inertia makes available.
+
+## Why you might not use Inertia with Laravel
 
 ### You can't leverage Blade
 
@@ -181,9 +175,8 @@ cumbersome to use.
   Blade doesn't force you to think about the data you're making available to your views.
 - I don't like the lack of good IDE support.
 
-If you _are_ a huge fan of Blade, you lose access to everything you love about it by using Inertia.
-
-It really is a case of choosing one or the other.
+If you _are_ a huge fan of Blade, you lose access to everything you love about it by using Inertia. It really is a case
+of choosing one or the other.
 
 ### You might not need an SPA
 
@@ -216,69 +209,161 @@ in [July 2023](https://twitter.com/taylorotwell/status/1684999340446900224).
 
 {% tweet url="https://twitter.com/taylorotwell/status/1684999340446900224" /%}
 
-## How to make the most of Inertia
+## How to get the most from Inertia
 
-- Use Ziggy
-- Use forms
-- Use middleware to share key data
+If you're keen to get started with Inertia, here are our top tips for learning to love it.
 
-_Begin by setting the stage for the current web development landscape, emphasizing the continuous evolution of
-technologies and the need for solutions that balance efficiency, performance, and developer experience. Introduce
-Inertia.js as a bridge between traditional server-driven applications and modern single-page applications (SPAs),
-specifically within the context of Laravel projects._
+### Use Ziggy for routing
 
-## The Evolution of Web Development
+Love using the `route()` helper in Blade? If you're not using it already,
+you [definitely should](https://laravel.com/docs/master/helpers#method-route).
 
-_Provide a brief overview of how web development practices have evolved, from multi-page applications (MPAs) to SPAs.
-Discuss the rise of API-driven development and the complexities it introduced. This section sets the historical context
-for why Inertia.js is relevant today._
+You can _effectively_ achieve the same result using Tigten's [Ziggy](https://github.com/tighten/ziggy) package.
+Ziggy will take your Laravel routes, serialize them as JSON, and embed them in your HTML when the page first loads.
+Route parameters, domains, prefixes, etc. will all be included too.
 
-## Understanding Inertia.js
+Ziggy will give you a `route()` method on the `window` object, which you can use to dynamically create the route string.
+Ziggy will also give you a `route().current()` method, which you can use as a truth test to see if the route you
+pass in is the route that is currently being visited. This is super helpful for creating dynamic navbars.
 
-Explain what Inertia.js is and how it works, focusing on its role as a bridge that allows developers to create SPAs
-without a separate API. Highlight its key features, such as tight backend integration, the use of existing server-side
-routing and controllers, and seamless page transitions.
+Here's an example comparing Blade and Vue.
 
-## Why Inertia.js with Laravel?
+{% torchlight-collection type="side-by-side" %}
 
-Delve into the specific advantages of using Inertia.js with Laravel, such as:
+```blade {% name="posts/index.blade.php" %}
+<div class="grid grid-cols-3 gap-6">
+  @foreach($posts as $post)
+  <div>
+    <a href="{{ route('posts.show', ['post' => $post]) }}" 
+       class="font-semibold text-lg"
+    >{{ $post->title }}</a>
+  </div>
+  @endforeach
+</div>
+```
 
-- Simplified development workflow by leveraging Laravel's robust backend capabilities alongside Vue, React, or Svelte
-  for the frontend.
-- Reduced boilerplate code and complexity compared to traditional SPA development, which often requires an API.
-- Enhanced user experience through faster page loads and app-like interactions, without sacrificing SEO and server-side
-  rendering benefits.
-- Strong community support and a growing ecosystem of tools and resources.
+```vue {% name="Posts/Index.vue" %}
 
-## Respectful Comparison with Other Technologies
+<template>
+  <div class="grid grid-cols-3 gap-6">
+    <div v-for="post in $props.posts">
+      <Link :href="route('posts.show', {post: post.id})"
+            class="font-semibold text-lg"
+      >{{ post.title }}
+      </Link>
+    </div>
+  </div>
+</template>
 
-Without diminishing other technologies, present a comparison that highlights how Inertia.js offers a unique approach.
-For example, compare it to:
+<script setup>
+import {Link} from '@inertiajs/vue3';
+</script>
 
-- Traditional SPA frameworks (like Angular, React, or Vue used with separate backends), emphasizing Inertia's
-  elimination of the need for an API layer.
-- Server-side rendering (SSR) solutions, discussing how Inertia.js provides an alternative that maintains the benefits
-  of SSR while offering the interactive advantages of SPAs.
-- Mention the scenarios where traditional SPAs or SSR might still be the preferred choice, such as applications
-  requiring highly decoupled frontends and backends or those heavily reliant on microservices.
+<script>
+export default {
+  props: {
+    posts: Array,
+  },
+};
+</script>
+```
 
-## Case Studies and Success Stories
+{% /torchlight-collection %}
 
-Share examples from your own experience or the broader community where Inertia.js with Laravel has led to successful
-outcomes. Highlight specific challenges it helped overcome, performance improvements, or developer productivity gains.
+### Use Inertia forms and Laravel form requests
 
-## Getting Started with Inertia.js and Laravel
+ABC.
 
-Offer practical advice for developers looking to start with Inertia.js in their Laravel projects. Include tips on setup,
-learning resources, and best practices for structuring projects for scalability and maintainability.
+### Use Inertia middleware to share common data across pages
 
-## The Future of Web Development with Inertia.js and Laravel
+ABC.
 
-Conclude by reflecting on the potential of Inertia.js and Laravel to shape the future of web development. Encourage
-readers to explore this approach as a way to build efficient, user-friendly applications while staying aligned with
-modern development trends.
+### Use Inertia events for triggering analytics
 
-## Call to Action
+You can hook into all of the Inertia events using the `router`, which makes it trivial to track pageviews as users
+navigate your application.
 
-Invite readers to share their experiences, questions, or insights on using Inertia.js with Laravel in the comments
-section. Encourage them to explore further and consider how this approach might benefit their projects.
+{% torchlight-collection type="tabs" %}
+
+```js {% name="app.js" %}
+import './bootstrap'; // [tl! collapse:start]
+import '../css/app.css';
+import {
+	createApp,
+	h,
+} from 'vue';
+import {
+	createInertiaApp,
+	Head as InertiaHead,
+	Link as InertiaLink,
+	router,
+} from '@inertiajs/vue3'; // [tl! collapse:end]
+
+createInertiaApp({
+	resolve: (name) => resolvePageComponent( // [tl! collapse:start]
+		`./Pages/${name}.vue`, import.meta.glob([
+			'./**/*.vue',
+			'../img/**',
+		])), // [tl! collapse:end]
+
+	setup({
+		      el,
+		      App,
+		      props,
+		      plugin
+	      }) {
+		const vueApp = createApp({ // [tl! collapse:start]
+			methods: {
+				trackFathomPageview: function () {
+					if (!this.$inertia.page.props.meta) {
+						return;
+					}
+
+					let url = this.$inertia.page.props.meta.fathom.canonical_url || '';
+
+					if (window.fathom && url) {
+						fathom.trackPageview({
+							url: url,
+						});
+					}
+				},
+			},
+
+			mounted() {
+				setTimeout(() => {
+					this.trackFathomPageview();
+				}, 100);
+			},
+
+			render: () => h(App, props),
+		})
+			.mixin({methods: {route}}) // Defined in the Ziggy package
+			.component('InertiaHead', InertiaHead)
+			.component('InertiaLink', InertiaLink)
+			.use(plugin);
+
+		const mountedVueApp = vueApp.mount(el); // [tl! collapse:end]
+
+		router.on('navigate', (event) => { // [tl! **]
+			mountedVueApp.trackFathomPageview(); // [tl! **]
+		}); // [tl! **]
+	},
+});
+```
+
+{% /torchlight-collection %}
+
+## Final thoughts
+
+Hopefully it's clear by now that we love Inertia, and have no plans to move away from it any time soon. We are satisfied
+with the fact that Inertia is very unlikely to get new features into the future, and grateful for the ongoing
+maintenance being completed by the Laravel core team.
+
+If you're looking for further reading, we encourage you to check out the
+official [Inertia documentation](https://inertiajs.com/), and to also take a look at
+the [Advanced Inertia](https://advanced-inertia.com/) course by Boris Lepikhin.
+
+{% call-to-action
+title="Looking for help with your Inertia project?"
+buttonText="Contact us today"
+/%}

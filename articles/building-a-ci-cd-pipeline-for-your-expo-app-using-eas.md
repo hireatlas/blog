@@ -29,7 +29,9 @@ to push it to EAS and let it handle the entire end-to-end build/release process.
 Having a painless and consistent mobile workflow allows us to feel more confident when releasing more regular
 improvements to our apps.
 
-## Getting started
+## Building on EAS
+
+### Getting started
 
 To get started with EAS, you will need to:
 
@@ -42,7 +44,7 @@ This final step will create a new `eas.json` file within your application.
 
 You can find more information in the official [EAS Build documentation](https://docs.expo.dev/build/setup/).
 
-## Configuration
+### Configuration
 
 All the configuration for EAS is defined within a single `eas.json` file.
 
@@ -141,7 +143,7 @@ Here are some helpful links for EAS Build:
 - [The full documentation for the `eas.json` file](https://docs.expo.dev/eas/json/#eas-build)
 - [Managing environment variables in Expo](https://docs.expo.dev/guides/environment-variables/)
 
-## Your first build
+### Your first build
 
 In this step we will use EAS to actually build a working development version of our app which can be installed into a
 mobile simulator.
@@ -178,7 +180,7 @@ You can also now repeat the process for an Android build:
 eas build -p android --profile development
 ```
 
-## Automating your build workflow using GitHub Actions
+### Automating your build workflow using GitHub Actions
 
 We have now successfully built and tested a working development version of our mobile app manually using Expo CLI.
 
@@ -246,7 +248,7 @@ job is to trigger an EAS build of the `production` profile on all platforms (iOS
 EAS builds can take anywhere from **5 - 20 minutes** to run, so our workflow runs with the `--no-wait` flag which allows
 us to immediately finish the job and save CI minutes.
 
-If you prefer that the job continues running until the EAS build has completed, you can omit this argument.
+If you prefer that the job continues running until the EAS build has completed, you can omit this flag.
 {% /callout %}
 
 This particular workflow can also be triggered manually via the GitHub UI if needed (across one or both platforms):
@@ -259,7 +261,9 @@ If you have not yet run a production build on EAS before, you may have
 to [upload your Apple/Google credentials](https://docs.expo.dev/app-signing/app-credentials/) for the app to be built
 correctly.
 
-## Releasing to production
+## Releasing on EAS
+
+### Releasing to internal testers
 
 Expo also has the ability to automatically release builds of your app to App Store Connect and Google Play Console,
 where they can be distributed to internal testers via TestFlight and Test Tracks respectively.
@@ -405,10 +409,12 @@ there is a new release of the app to test. They can install this via TestFlight 
 
 ![New App Version Notification Email - Google Play Console](/building-a-ci-cd-pipeline-for-your-expo-app-using-eas/new-app-email-google.png)
 
-Once internal testing/QA is completed, you can use the App Store Connect and Google Play Console websites to promote
-each new version to the public.
+### Releasing to production
 
-## Managing app versions
+Once internal testing/QA is completed, you can use App Store Connect and the Google Play Console to promote each new
+version to the public.
+
+### Managing app versions
 
 You can use `eas.json` to automatically manage your app versions instead of manually incrementing this via `app.json`.
 Our example above is configured to only increment the current version when a production build is run, so that
