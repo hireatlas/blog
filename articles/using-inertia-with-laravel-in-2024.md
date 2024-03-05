@@ -56,8 +56,7 @@ immediately available to your React, Vue, or Svelte components. Your frontend ap
 from the backend, and render the appropriate component, using the props you passed to it.
 
 Once you try it, it really feels quite magical to be writing a Vue (or others) SPA, with all the benefits Vue gives you,
-but with
-access to your controllers that feels like a Blade application.
+but with access to your controllers that feels like a Blade application.
 
 Here's an example:
 
@@ -272,16 +271,229 @@ export default {
 
 ### Use Inertia forms and Laravel form requests
 
-ABC.
+Inertia comes with a [form helper](https://inertiajs.com/forms), and when paired with Laravel's form requests, you get
+an amazing experience that makes it a piece of cake to submit, validate, and display errors for your form inputs.
+
+When you use the Inertia forms helper, it automatically handles the submission of form data to your Laravel backend.
+Laravel's form request validation then takes over to validate the incoming data according to the rules defined in your
+form request classes.
+
+If the submitted data fails validation, Laravel automatically generates a response with the appropriate validation
+errors. Inertia automatically catches these errors and makes them available within your JavaScript components, without
+requiring any additional boilerplate code for error handling.
+
+This is huge as it allows for a more intuitive and less error-prone development process. Developers can focus on
+defining validation rules within Laravel and building the user interface without worrying about the intricacies of error
+handling.
+
+Because the validation errors are immediately displayed to users on submission, users also benefit, with a really quick
+and responsive UI.
+
+{% torchlight-collection type="tabs" %}
+
+```vue {% name="Edit.js" %}
+
+<template>
+  <form @submit.prevent="submit"
+        class="grid gap-6"
+  > <!-- [tl! collapse:start] -->
+    <div>
+      <label for="first_name">
+        First name
+      </label>
+
+      <input id="first_name"
+             v-model="form.first_name"
+             class="mt-1 block w-full"
+             type="text"
+             autocomplete="given-name"
+      />
+
+      <p v-if="form.errors.first_name"
+         class="mt-2 text-red-500"
+      >
+        {{ form.errors.first_name }}
+      </p>
+    </div>
+
+    <div>
+      <label for="middle_name">
+        Middle name
+      </label>
+
+      <input id="middle_name"
+             v-model="form.middle_name"
+             class="mt-1 block w-full"
+             type="text"
+             autocomplete="additional-name"
+      />
+
+      <p v-if="form.errors.middle_name"
+         class="mt-2 text-red-500"
+      >
+        {{ form.errors.middle_name }}
+      </p>
+    </div>
+
+    <div>
+      <label for="last_name">
+        Last name
+      </label>
+
+      <input id="last_name"
+             v-model="form.last_name"
+             class="mt-1 block w-full"
+             type="text"
+             autocomplete="family-name"
+      />
+
+      <p v-if="form.errors.last_name"
+         class="mt-2 text-red-500"
+      >
+        {{ form.errors.last_name }}
+      </p>
+    </div>
+
+    <div>
+      <p :on="form.recentlySuccessful"
+         class="mr-3"
+      >
+        Saved.
+      </p>
+
+      <button :class="{ 'opacity-25': form.processing }"
+              :disabled="form.processing"
+              type="submit"
+              class="btn-primary"
+      >
+        Save
+      </button>
+    </div><!-- [tl! collapse:end] -->
+  </form>
+</template>
+
+<script>
+export default {
+  props: {
+    candidate: Object,
+  },
+
+  data() { // [tl! **]
+    return { // [tl! **]
+      form: this.$inertia.form({ // [tl! **]
+        first_name:  this.$props.candidate.first_name, // [tl! **]
+        middle_name: this.$props.candidate.middle_name, // [tl! **]
+        last_name:   this.$props.candidate.last_name, // [tl! **]
+      }), // [tl! **]
+    }; // [tl! **]
+  }, // [tl! **]
+
+  methods: { // [tl! **]
+    submit: function () { // [tl! **]
+      this.form.put(route('candidates.profile.update')); // [tl! **]
+    }, // [tl! **]
+  },
+};
+</script>
+
+```
+
+{% /torchlight-collection %}
+
+Keep in mind that you can further cut down on the template by introducing reusable components to handle the logic for
+displaying errors.
 
 ### Use Inertia middleware to share common data across pages
 
-ABC.
+You can make use of Inertia's [shared data middleware](https://inertiajs.com/shared-data) to automatically inject props
+into every Inertia page response.
+
+This is tremendously helpful for giving your components context about the user, or anything else that you need to make
+your pages truly powerful.
+
+A common example is details about the authenticated user (or lack thereof), permissions checks, customer branding
+settings, or unread notification counts. We also make use of the middleware to give us a canonical route that we can
+pass to [Fathom Analytics](https://usefathom.com/ref/HZJZDQ).
+
+When you share data via the middleware, it will be available in your JavaScript under `$page.props`. Here's an
+example from our SaaS [RecruitKit](https://www.recruitkit.com.au/):
+
+{% torchlight-collection type="tabs" %}
+
+```php {% name="HandleInertiaRequests.php" %}
+<?php
+
+namespace App\Http\Middleware;
+
+use Domains\Candidates\Models\Candidate;
+use Domains\Tenants\Settings\BrandingSettings;
+use Illuminate\Http\Request;
+use Inertia\Middleware;
+
+class HandleInertiaRequests extends Middleware
+{
+    public function share(Request $request): array // [tl! focus:start]
+    {
+        return array_merge(
+            parent::share($request),
+            [
+                'meta' => [
+                    'user' => function () use ($request) {
+                        return $request->user();
+                    },
+
+                    'notifications_count' => function () use ($request) {
+                        /** @var Candidate $candidate */
+                        $candidate = $request->user();
+
+                        if (! $candidate) {
+                            return 0;
+                        }
+                        
+                        return $candidate
+                            ->unreadNotifications()
+                            ->count();
+                    },
+
+                    'settings' => [
+                        'branding' => function () {
+                            /** @var BrandingSettings $settings */
+                            $settings = app(BrandingSettings::class);
+
+                            return array_merge(
+                                [
+                                    'name' => $settings->name,
+                                    'palette' => $settings->palette,
+                                ],
+                                $settings->getLogoUrls()
+                            );
+                        },
+                    ],
+
+                    'fathom' => [
+                        'canonical_url' => $request->getSchemeAndHttpHost().$request->route()->toSymfonyRoute()->getPath(),
+                    ],
+                ],
+            ]
+        );
+    } // [tl! focus:end]
+}
+
+```
+
+```vue {% name="Header.vue" %}
+
+<template>
+  <pre>{{ JSON.stringify($page.props.meta, null, 2) }}</pre>
+</template>
+```
+
+{% /torchlight-collection %}
 
 ### Use Inertia events for triggering analytics
 
 You can hook into all of the Inertia events using the `router`, which makes it trivial to track pageviews as users
-navigate your application.
+navigate your application, using [Fathom Analytics](https://usefathom.com/ref/HZJZDQ).
 
 {% torchlight-collection type="tabs" %}
 
@@ -312,21 +524,21 @@ createInertiaApp({
 		      props,
 		      plugin
 	      }) {
-		const vueApp = createApp({ // [tl! collapse:start]
+		const vueApp = createApp({
 			methods: {
-				trackFathomPageview: function () {
-					if (!this.$inertia.page.props.meta) {
-						return;
-					}
+				trackFathomPageview: function () { // [tl! **]
+					if (!this.$inertia.page.props.meta) { // [tl! **]
+						return; // [tl! **]
+					} // [tl! **]
 
-					let url = this.$inertia.page.props.meta.fathom.canonical_url || '';
+					let url = this.$inertia.page.props.meta.fathom.canonical_url || ''; // [tl! **]
 
-					if (window.fathom && url) {
-						fathom.trackPageview({
-							url: url,
-						});
-					}
-				},
+					if (window.fathom && url) { // [tl! **]
+						fathom.trackPageview({ // [tl! **]
+							url: url, // [tl! **]
+						}); // [tl! **]
+					} // [tl! **]
+				}, // [tl! **]
 			},
 
 			mounted() {
@@ -336,7 +548,7 @@ createInertiaApp({
 			},
 
 			render: () => h(App, props),
-		})
+		}) // [tl! collapse:start]
 			.mixin({methods: {route}}) // Defined in the Ziggy package
 			.component('InertiaHead', InertiaHead)
 			.component('InertiaLink', InertiaLink)
@@ -364,6 +576,6 @@ official [Inertia documentation](https://inertiajs.com/), and to also take a loo
 the [Advanced Inertia](https://advanced-inertia.com/) course by Boris Lepikhin.
 
 {% call-to-action
-title="Looking for help with your Inertia project?"
+title="Looking for help with your Laravel and Inertia project?"
 buttonText="Contact us today"
 /%}
