@@ -7,7 +7,7 @@ date: 2024-03-05
 category: trends
 authors:
   - mitchell-davis
-published: false
+published: true
 ---
 
 I was listening to
