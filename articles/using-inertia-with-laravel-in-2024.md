@@ -26,8 +26,10 @@ First, let's get up to speed on Inertia.
 
 [Inertia](https://inertiajs.com/) is a protocol created by [Jonathan Reinink](https://twitter.com/reinink), with
 supporting libraries for React, Vue, Svelte, PHP, and Rails, with the goal of helping you write single-page apps (SPAs),
-without all the complexity that comes with SPAs. Think about managing sessions, tokens, APIs, routing, asset cache
-busting. Inertia helps us with all of these by acting as the glue layer between your frontend and backend technologies.
+without all the complexity that comes with SPAs. Think about managing sessions, tokens, APIs, routing, and asset cache
+busting.
+
+Inertia helps us with all of these by acting as the glue layer between your frontend and backend technologies.
 
 With Inertia applications, you are simultaneously writing both a server-side and a client-side rendered application, and
 it all just works seamlessly.
