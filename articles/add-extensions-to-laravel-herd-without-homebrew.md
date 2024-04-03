@@ -116,6 +116,11 @@ This immediately gave me flashbacks to the dark days of yore, and I knew this wa
 talk - dealing with not only installing Homebrew, then PHP, then running PECL, only to have it probably break right
 before my talk 😅
 
+{% call-to-action
+title="Looking for help with your Laravel project?"
+buttonText="Contact us today"
+/%}
+
 ## The better way to add PHP extensions to Laravel Herd
 
 I did some research, crawling through GitHub issues, until I found

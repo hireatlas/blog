@@ -161,6 +161,11 @@ your initial load really quick, and makes it easier for search engines to index 
 
 It's really easy to setup using the packages that Inertia makes available.
 
+{% call-to-action
+title="Looking for help with your Laravel and Inertia project?"
+buttonText="Contact us today"
+/%}
+
 ## Why you might not use Inertia with Laravel
 
 ### You can't leverage Blade
@@ -576,8 +581,3 @@ maintenance being completed by the Laravel core team.
 If you're looking for further reading, we encourage you to check out the
 official [Inertia documentation](https://inertiajs.com/), and to also take a look at
 the [Advanced Inertia](https://advanced-inertia.com/) course by Boris Lepikhin.
-
-{% call-to-action
-title="Looking for help with your Laravel and Inertia project?"
-buttonText="Contact us today"
-/%}
