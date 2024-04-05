@@ -163,7 +163,6 @@ It's really easy to setup using the packages that Inertia makes available.
 
 {% call-to-action
 title="Looking for help with your Laravel and Inertia project?"
-buttonText="Contact us today"
 /%}
 
 ## Why you might not use Inertia with Laravel

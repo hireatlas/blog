@@ -118,7 +118,6 @@ before my talk 😅
 
 {% call-to-action
 title="Looking for help with your Laravel project?"
-buttonText="Contact us today"
 /%}
 
 ## The better way to add PHP extensions to Laravel Herd

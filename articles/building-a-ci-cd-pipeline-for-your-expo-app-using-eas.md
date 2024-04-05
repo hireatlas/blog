@@ -440,5 +440,4 @@ Expo includes many other features which you may find useful for improving your m
 
 {% call-to-action
 title="Looking for help with your Expo app?"
-buttonText="Contact us today"
 /%}
