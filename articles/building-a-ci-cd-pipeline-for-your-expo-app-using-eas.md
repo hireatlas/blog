@@ -143,6 +143,10 @@ Here are some helpful links for EAS Build:
 - [The full documentation for the `eas.json` file](https://docs.expo.dev/eas/json/#eas-build)
 - [Managing environment variables in Expo](https://docs.expo.dev/guides/environment-variables/)
 
+{% call-to-action
+title="Looking for help with your Expo app?"
+/%}
+
 ### Your first build
 
 In this step we will use EAS to actually build a working development version of our app which can be installed into a
@@ -437,7 +441,3 @@ Expo includes many other features which you may find useful for improving your m
   the expo-updates library.
 * [EAS Metadata](https://docs.expo.dev/eas/metadata/): Automate and maintain your app store presence from the command
   line.
-
-{% call-to-action
-title="Looking for help with your Expo app?"
-/%}
