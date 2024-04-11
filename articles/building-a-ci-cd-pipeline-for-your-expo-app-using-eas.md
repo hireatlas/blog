@@ -23,7 +23,7 @@ Publishing a new mobile app version could take anywhere from an hour to multiple
 predict what might go wrong and how long it would take to troubleshoot, especially in the case of cryptic
 CocoaPods/Gradle errors. This had a direct impact on how many times per year we could publish new app releases.
 
-**EAS takes care of everything.** Once we have the app running on our simulator in the [Expo Go sandbox](https://expo.dev/client),
+**EAS takes care of everything.** Once we have the app running on our simulator in the [Expo Go sandbox](https://expo.dev/go),
 it becomes trivial to then have EAS handle the entire process for building and releasing the native app.
 
 Having a painless and consistent mobile workflow allows us to feel more confident when releasing more regular
