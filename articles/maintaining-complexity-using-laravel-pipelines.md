@@ -228,7 +228,7 @@ class StartingFilter
 }
 ```
 
-The next filter (`MatchingSkillsFilter`) now needs to further reduce the list of Candidates down
+The next filter, `MatchingSkillsFilter`, now needs to further reduce the list of Candidates down
 to only those which have the skills required for the job:
 
 ```php
