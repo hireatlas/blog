@@ -1,6 +1,6 @@
 ---
 slug: laravel-pipelines-for-managing-complexity
-issue: pipelines
+issue: laravel-pipelines-for-managing-complexity
 title: "Laravel Pipelines - Wrangling complexity in a maintainable way"
 description: "How we use Laravel Pipelines to take control of complex processes"
 date: 2024-04-18
